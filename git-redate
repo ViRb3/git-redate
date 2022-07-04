@@ -99,16 +99,17 @@ if [ "${ALL}" -eq 0 ]; then
     REBASE_REF="HEAD~${COMMITS:-5}"
 fi
 
-git log $LOG_FILTER --date=iso-strict-local --pretty=format:"%cd | %H | %s" >"$COMMITS_FILE"
+git log $LOG_FILTER --date=iso-strict-local --pretty=format:"%ad | %cd | %H | %s" >"$COMMITS_FILE"
 
 "${VISUAL:-${EDITOR:-${OUR_EDITOR}}}" "$COMMITS_FILE"
 
 read -r -d '' REDATE_EXEC <<EOM
-export GIT_COMMITTER_DATE=\$(tail -1 '$COMMITS_FILE' | awk -F "|" '{ print \$1 }')
-commit_hash=\$(tail -1 '$COMMITS_FILE' | awk -F "|" '{ print \$2 }')
+export GIT_AUTHOR_DATE=\$(tail -1 '$COMMITS_FILE' | awk -F "|" '{ print \$1 }')
+export GIT_COMMITTER_DATE=\$(tail -1 '$COMMITS_FILE' | awk -F "|" '{ print \$2 }')
+commit_hash=\$(tail -1 '$COMMITS_FILE' | awk -F "|" '{ print \$3 }')
 grep -vF "\$commit_hash" '$COMMITS_FILE' >'$COMMITS_FILE.tmp'
 mv '$COMMITS_FILE.tmp' '$COMMITS_FILE'
-git commit --date="\$GIT_COMMITTER_DATE" --amend --no-edit -n $COMMIT_ARGS
+git commit --date="\$GIT_AUTHOR_DATE" --amend --no-edit -n $COMMIT_ARGS
 EOM
 
 echo "Rebase ref: $REBASE_REF" >>"$LOG_FILE"
