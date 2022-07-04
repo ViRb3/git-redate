@@ -84,7 +84,7 @@ while [[ $# -ge 1 ]]; do
     shift
 done
 
-COMMITS_FILE=$(mktemp /tmp/gitblah-XXXX)
+COMMITS_FILE=$(mktemp /tmp/git_redate-XXXX)
 [ -f "$COMMITS_FILE" ] || die "could not get COMMITS_FILE=[$COMMITS_FILE]"
 
 LOG_FILE=$(mktemp "$COMMITS_FILE.log")
