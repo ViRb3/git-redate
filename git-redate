@@ -14,17 +14,17 @@ is_git_repo() {
 is_git_repo
 
 make_editor_choice() {
-    echo "Which editor do you want to use for this repo?"
-    echo "1. VI"
-    echo "2. NANO"
-    echo "3. Your own"
-    echo "You Choose: "
+    echo "Which text editor do you want to use for git-redate?"
+    echo "1. vi"
+    echo "2. nano"
+    echo "3. <custom>"
+    echo "Your choice (1-3): "
 
     read -r -d'' -s -n1 CHOOSE_EDITOR
 }
 
 get_editor_executable() {
-    echo "What is the path to your prefered test editor?"
+    echo "What is the path to your text editor?"
     read -r EDITOR_PATH
 }
 
@@ -120,7 +120,7 @@ RESULT=$?
 grep -F "$LOG_OUT_PATTERN" <"$LOG_FILE"
 
 if [ $RESULT -eq 0 ]; then
-    echo "Git commit dates updated. Run 'git push -f BRANCH_NAME' to push your changes."
+    echo "Git commit dates updated."
 else
     echo "Git redate failed. Please make sure you run this on a clean working directory."
 fi
