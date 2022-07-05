@@ -109,7 +109,7 @@ export GIT_COMMITTER_DATE=\$(tail -1 '$COMMITS_FILE' | awk -F "|" '{ print \$2 }
 commit_hash=\$(tail -1 '$COMMITS_FILE' | awk -F "|" '{ print \$3 }')
 grep -vF "\$commit_hash" '$COMMITS_FILE' >'$COMMITS_FILE.tmp'
 mv '$COMMITS_FILE.tmp' '$COMMITS_FILE'
-git commit --date="\$GIT_AUTHOR_DATE" --amend --no-edit -n $COMMIT_ARGS
+git commit --date="\$GIT_AUTHOR_DATE" --amend --allow-empty --no-edit -n $COMMIT_ARGS
 EOM
 
 echo "Rebase ref: $REBASE_REF" >>"$LOG_FILE"
