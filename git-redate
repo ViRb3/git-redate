@@ -101,7 +101,7 @@ fi
 
 git log $LOG_FILTER --date=iso-strict-local --pretty=format:"%ad | %cd | %H | %s" >"$COMMITS_FILE"
 
-"${VISUAL:-${EDITOR:-${OUR_EDITOR}}}" "$COMMITS_FILE"
+eval "${OUR_EDITOR:-${VISUAL:-${EDITOR}}}" "$COMMITS_FILE"
 
 read -r -d '' REDATE_EXEC <<EOM
 export GIT_AUTHOR_DATE=\$(tail -1 '$COMMITS_FILE' | awk -F "|" '{ print \$1 }')
